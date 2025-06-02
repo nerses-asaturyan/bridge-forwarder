@@ -1,0 +1,14 @@
+node_modules
+package-lock.json
+cache
+.env
+ignition/deployments
+artifacts/*
+!artifacts/contracts/
+artifacts/contracts/*
+!artifacts/contracts/forwarder.sol/
+artifacts/contracts/forwarder.sol/*
+!artifacts/contracts/forwarder.sol/Forwarder.json
+!artifacts/contracts/balanceviewer.sol/
+artifacts/contracts/balanceviewer.sol/*
+!artifacts/contracts/balanceviewer.sol/BalanceViewer.json
