@@ -2,12 +2,6 @@
 pragma solidity ^0.8.28;
 
 contract BalanceViewer {
-    struct UserBalances {
-        bool success;      
-        uint256 tokenBalance;    
-        uint256 nativeBalance; 
-    }
-
     function getBalances(
         address user,
         address[] calldata tokens
@@ -29,25 +23,31 @@ contract BalanceViewer {
         );
     }
 
-    function getMultiUserBalances(
+    function batchGetBalances(
         address[] calldata users,
         address[] calldata tokens
     )
         external
         view
-        returns (UserBalances[] memory)
+        returns (bool[][] memory allSuccesses, uint256[][] memory allBalances)
     {
-        UserBalances[] memory results = new UserBalances[](users.length);
+        allSuccesses = new bool[][](users.length);
+        allBalances = new uint256[][](users.length);
 
-        for (uint256 i = 0; i < users.length; i++) {
-            (bool ok, uint256 tokenBal) = getBalance(users[i], tokens[i]);
-            results[i] = UserBalances({
-                success: ok,
-                tokenBalance: tokenBal,
-                nativeBalance: users[i].balance
-            });
+        for (uint i = 0; i < users.length; i++) {
+            bool[] memory successes = new bool[](tokens.length + 1);
+            uint256[] memory balances = new uint256[](tokens.length + 1);
+
+            for (uint j = 0; j < tokens.length; j++) {
+                (successes[j], balances[j]) = getBalance(users[i], tokens[j]);
+            }
+
+            successes[tokens.length] = true;
+            balances[tokens.length] = users[i].balance;
+
+            allSuccesses[i] = successes;
+            allBalances[i] = balances;
         }
-        return results;
     }
 
     function getBalance(

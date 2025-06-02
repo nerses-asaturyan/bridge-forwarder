@@ -67,6 +67,11 @@ module.exports = {
       accounts: [process.env.PRIV_KEY],
       chainId: 167009,
     },
+    taiko: {      
+      url: 'https://rpc.mainnet.taiko.xyz',
+      accounts: [process.env.PRIV_KEY],
+      chainId: 167000,
+    },
     immutableTestnet: {
       url: 'https://rpc.testnet.immutable.com',
       accounts: [process.env.PRIV_KEY],
@@ -93,7 +98,8 @@ module.exports = {
       mainnet: process.env.sepolia,
       optimisticEthereum: process.env.optimismSepolia,
       arbitrumOne: process.env.arbitrumSepolia,
-      base: process.env.baseAPIKey
+      base: process.env.baseAPIKey,
+      taiko:process.env.taiko
     },
     customChains: [
       {
@@ -102,6 +108,14 @@ module.exports = {
         urls: {
           apiURL: 'https://api-sepolia.mantlescan.xyz/api',
           browserURL: 'https://sepolia.mantlescan.xyz/',
+        },
+      },
+      {
+        network: "taiko",
+        chainId: 167000,
+        urls: {
+          apiURL: "https://api.taikoscan.io/api",
+          browserURL: " https://taikoscan.io",
         },
       },
       {

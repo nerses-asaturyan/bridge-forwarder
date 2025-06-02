@@ -3,7 +3,7 @@ pragma solidity ^0.8.28;
 
 contract Forwarder {
     error NativeTransferFailed();
-    event FundsForwardedInt(uint256 ID);
+    event FundsForwardedWithId(uint256 id);
     event FundsForwardedWithData(bytes data);
 
     address private immutable SOLVER;
@@ -17,14 +17,14 @@ contract Forwarder {
         emit FundsForwardedWithData(msg.data);
     }
 
-    function forward(bytes calldata data) external payable {
+    function forwardWithData(bytes calldata data) external payable {
         send(SOLVER, msg.value);
         emit FundsForwardedWithData(data);
     }
 
-    function forwardInt(uint256 ID) external payable{
+    function forwardWithId(uint256 id) external payable{
         send(SOLVER, msg.value);
-        emit FundsForwardedInt(ID);
+        emit FundsForwardedWithId(id);
     }
 
     function send(address to, uint256 value) internal {
