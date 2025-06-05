@@ -3,7 +3,7 @@ const fs = require("fs");
 const path = require("path");
 
 const networks = [
-  "sepolia",
+  "ETHEREUM_MAINNET",
 ];
 
 const ignitionModule = "./ignition/modules/forwarder/deployForwarder.js";

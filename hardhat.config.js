@@ -1,7 +1,24 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("@matterlabs/hardhat-zksync-deploy");
 require("dotenv").config();
+
+const networksSimple = require("./networks-simple.json");
+
+const dynamicNetworks = networksSimple.reduce((obj, net) => {
+  obj[net.name] = {
+    url: net.node_url,
+    accounts: [process.env.PRIVATE_KEY],
+    chainId: Number(net.chain_id),
+  };
+  return obj;
+}, {});
+
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
+  zksolc: {
+    version: "latest",
+    settings: {},
+  },
   solidity: {
     version: '0.8.28',
     settings: {
@@ -12,9 +29,22 @@ module.exports = {
     },
   },
   networks: {
+    SOPHON_MAINNET: {
+      url: "https://rpc.sophon.xyz",
+      ethNetwork: "mainnet",
+      verifyURL: "https://verification-explorer.sophon.xyz/contract_verification",
+      browserVerifyURL: "https://explorer.sophon.xyz/",
+      enableVerifyURL: true,
+      zksync: false,
+      accounts: [process.env.PRIVATE_KEY],
+    },
+    REDSTONE_MAINNET: {
+      url: "https://rpc.redstonechain.com",
+      accounts: [process.env.PRIVATE_KEY],
+    },
     mainnet: {
       url: process.env.ethRPC,
-      accounts: [process.env.mainnet],
+      accounts: [process.env.PRIVATE_KEY],
     },
     arbitrumOne: {
       url: process.env.arbitrumRPC,
@@ -67,7 +97,7 @@ module.exports = {
       accounts: [process.env.PRIV_KEY],
       chainId: 167009,
     },
-    taiko: {      
+    taiko: {
       url: 'https://rpc.mainnet.taiko.xyz',
       accounts: [process.env.PRIV_KEY],
       chainId: 167000,
@@ -81,6 +111,17 @@ module.exports = {
       url: 'https://rpc.minato.soneium.org/',
       accounts: [process.env.PRIV_KEY],
     },
+    NAHMII_MAINNET: {
+      url: "https://rpc.n3.nahmii.io",
+      accounts: [process.env.PRIVATE_KEY],
+    },
+    zero: {
+      url: 'https://rpc.zerion.io/v1/zero',
+      zksync: false,
+      ethNetwork: 'mainnet',
+      accounts: [process.env.PRIVATE_KEY]
+    },
+    // ...dynamicNetworks,
   },
   etherscan: {
     apiKey: {
@@ -99,7 +140,7 @@ module.exports = {
       optimisticEthereum: process.env.optimismSepolia,
       arbitrumOne: process.env.arbitrumSepolia,
       base: process.env.baseAPIKey,
-      taiko:process.env.taiko
+      taiko: process.env.taiko
     },
     customChains: [
       {

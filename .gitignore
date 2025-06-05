@@ -12,3 +12,8 @@ artifacts/contracts/forwarder.sol/*
 !artifacts/contracts/balanceviewer.sol/
 artifacts/contracts/balanceviewer.sol/*
 !artifacts/contracts/balanceviewer.sol/BalanceViewer.json
+networks.json
+networks-simple.json
+swap-response.json
+swapped-chains.json
+all-swap-tx-log.json
