@@ -121,7 +121,14 @@ module.exports = {
       ethNetwork: 'mainnet',
       accounts: [process.env.PRIVATE_KEY]
     },
-    // ...dynamicNetworks,
+    zero: {
+      url: 'https://rpc.zerion.io/v1/zero',
+      zksync: true,
+      ethNetwork: 'mainnet',
+      verifyURL: 'any',
+      accounts: [process.env.PRIVATE_KEY]
+    },
+    ...dynamicNetworks,
   },
   etherscan: {
     apiKey: {
@@ -143,6 +150,14 @@ module.exports = {
       taiko: process.env.taiko
     },
     customChains: [
+      {
+        network: "ZERO_MAINNET",
+        chainId: 543210,
+        urls: {
+          apiURL: "https://zero-network.calderaexplorer.xyz/api",
+          browserURL: "https://zero-network.calderaexplorer.xyz"
+        }
+      },
       {
         network: 'mantleSepolia',
         chainId: 5003,
@@ -232,8 +247,8 @@ module.exports = {
         },
       },
     ],
-  },
-  sourcify: {
-    enabled: false,
-  },
-};
+    sourcify: {
+      enabled: false,
+    },
+  }
+}
